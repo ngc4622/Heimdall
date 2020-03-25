@@ -708,8 +708,10 @@ bool BridgeManager::SendPacket(OutboundPacket *packet, int timeout, int emptyTra
 		}
 	}
 
-	if (!SendBulkTransfer(packet->GetData(), packet->GetSize(), timeout))
+	if (!SendBulkTransfer(packet->GetData(), packet->GetSize(), timeout)) {
+		Interface::PrintError("Bulk transfer failed! \n");
 		return (false);
+	}
 
 	if (emptyTransferFlags & kEmptyTransferAfter)
 	{
