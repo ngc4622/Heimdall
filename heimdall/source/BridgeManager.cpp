@@ -527,6 +527,8 @@ bool BridgeManager::BeginSession(void)
 
 	if (deviceDefaultPacketSize != 0) // 0 means changing the packet size is not supported.
 	{
+		Interface::Print("Changing packet size succeeded\n");
+
 		fileTransferSequenceTimeout = 120000; // 2 minutes!
 		fileTransferPacketSize = 1048576; // 1 MiB
 		fileTransferSequenceMaxLength = 30; // Therefore, fileTransferPacketSize * fileTransferSequenceMaxLength == 30 MiB per sequence.
@@ -549,6 +551,8 @@ bool BridgeManager::BeginSession(void)
 			Interface::PrintError("Unexpected file part size response!\nExpected: 0\nReceived: %d\n", filePartSizeResponse.GetResult());
 			return (false);
 		}
+	} else {
+		Interface::Print("Can not change packet size\n");
 	}
 
 	Interface::Print("Session begun.\n\n");
